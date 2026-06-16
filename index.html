@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Test Lead Gen Page</title>
+
+  <!-- Google Tag Manager -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    (function(w,d,s,l,i){
+      w[l]=w[l]||[];
+      w[l].push({'gtm.start': new Date().getTime(), event:'gtm.js'});
+      var f=d.getElementsByTagName(s)[0],
+          j=d.createElement(s),
+          dl=l!='dataLayer'?'&l='+l:'';
+      j.async=true;
+      j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+      f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-XXXXXXX');
+  </script>
+  <!-- End Google Tag Manager -->
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f7fb;
+      color: #1f2937;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 16px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 520px;
+      background: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+      padding: 32px;
+    }
+
+    .eyebrow {
+      color: #2563eb;
+      font-size: 14px;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: 32px;
+      line-height: 1.1;
+    }
+
+    .subhead {
+      margin: 0 0 24px;
+      color: #4b5563;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: bold;
+      margin-bottom: 6px;
+    }
+
+    input {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 12px 14px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 16px;
+      margin-bottom: 16px;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    }
+
+    button {
+      width: 100%;
+      padding: 14px 16px;
+      border: none;
+      border-radius: 8px;
+      background: #2563eb;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #1d4ed8;
+    }
+
+    .message {
+      margin-top: 16px;
+      padding: 12px;
+      border-radius: 8px;
+      display: none;
+    }
+
+    .message.success {
+      display: block;
+      background: #ecfdf5;
+      color: #065f46;
+      border: 1px solid #a7f3d0;
+    }
+
+    .debug {
+      margin-top: 24px;
+      font-size: 13px;
+      color: #6b7280;
+    }
+
+    .debug button {
+      margin-top: 8px;
+      background: #111827;
+      font-size: 13px;
+      padding: 10px;
+    }
+
+    pre {
+      white-space: pre-wrap;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      padding: 12px;
+      border-radius: 8px;
+      max-height: 220px;
+      overflow: auto;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Google Tag Manager noscript -->
+  <noscript>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXXX"
+      height="0" width="0" style="display:none;visibility:hidden"></iframe>
+  </noscript>
+  <!-- End Google Tag Manager noscript -->
+
+  <main class="page">
+    <section class="card">
+      <div class="eyebrow">Free Quote</div>
+
+      <h1>Get Your Custom Estimate</h1>
+
+      <p class="subhead">
+        Fill out the form below and our team will follow up with pricing and availability in your area.
+      </p>
+
+      <form id="leadForm">
+        <label for="firstName">First Name</label>
+        <input id="firstName" name="first_name" type="text" autocomplete="given-name" required />
+
+        <label for="lastName">Last Name</label>
+        <input id="lastName" name="last_name" type="text" autocomplete="family-name" required />
+
+        <label for="phone">Phone</label>
+        <input id="phone" name="phone" type="tel" autocomplete="tel" required />
+
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" autocomplete="email" required />
+
+        <label for="zip">ZIP Code</label>
+        <input id="zip" name="zip" type="text" autocomplete="postal-code" required />
+
+        <button type="submit">Request My Quote</button>
+      </form>
+
+      <div id="successMessage" class="message">
+        Thanks. Your test lead was submitted.
+      </div>
+
+      <div class="debug">
+        <strong>Testing tools</strong>
+        <p>
+          Use these only while testing GTM. Submissions are stored locally in this browser, not permanently on GitHub Pages.
+        </p>
+
+        <button type="button" id="showLeadsButton">Show Local Test Leads</button>
+        <button type="button" id="loadJsonButton">Load leads.json From Same Site</button>
+        <button type="button" id="clearLeadsButton">Clear Local Test Leads</button>
+
+        <pre id="debugOutput">No debug data loaded yet.</pre>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Make sure dataLayer exists before we use it.
+    window.dataLayer = window.dataLayer || [];
+
+    // Find the form and debug elements.
+    var leadForm = document.getElementById('leadForm');
+    var successMessage = document.getElementById('successMessage');
+    var debugOutput = document.getElementById('debugOutput');
+
+    var showLeadsButton = document.getElementById('showLeadsButton');
+    var loadJsonButton = document.getElementById('loadJsonButton');
+    var clearLeadsButton = document.getElementById('clearLeadsButton');
+
+    // Listen for the form submit.
+    leadForm.addEventListener('submit', function(event) {
+      // Stop the form from refreshing the page.
+      event.preventDefault();
+
+      // Collect the form values.
+      var firstName = document.getElementById('firstName').value.trim();
+      var lastName = document.getElementById('lastName').value.trim();
+      var phone = document.getElementById('phone').value.trim();
+      var email = document.getElementById('email').value.trim();
+      var zip = document.getElementById('zip').value.trim();
+
+      // Create a simple lead object.
+      var lead = {
+        first_name: firstName,
+        last_name: lastName,
+        phone: phone,
+        email: email,
+        zip: zip,
+        submitted_at: new Date().toISOString(),
+        page_url: window.location.href
+      };
+
+      // Log the lead for live troubleshooting.
+      console.log('Lead form submitted:', lead);
+
+      // Push a clean event into the dataLayer for GTM.
+      window.dataLayer.push({
+        event: 'test_lead_submit',
+
+        // General lead fields.
+        lead_form_name: 'GitHub Pages Test Lead Form',
+        lead_source: 'github_pages_test_page',
+        lead_data: lead,
+
+        // Optional enhanced-conversion-style user data object.
+        // Your GTM tag can reference these fields if needed.
+        user_data: {
+          email: email,
+          phone_number: phone,
+          address: {
+            first_name: firstName,
+            last_name: lastName,
+            postal_code: zip
+          }
+        }
+      });
+
+      console.log('dataLayer event pushed:', window.dataLayer[window.dataLayer.length - 1]);
+
+      // Save the test lead in localStorage.
+      // This does NOT write to the hosted leads.json file.
+      var existingLeads = JSON.parse(localStorage.getItem('test_leads') || '[]');
+      existingLeads.push(lead);
+      localStorage.setItem('test_leads', JSON.stringify(existingLeads, null, 2));
+
+      // Show success message.
+      successMessage.className = 'message success';
+
+      // Show debug output on the page.
+      debugOutput.textContent = JSON.stringify(lead, null, 2);
+
+      // Reset the form.
+      leadForm.reset();
+    });
+
+    // Show locally stored test leads.
+    showLeadsButton.addEventListener('click', function() {
+      var leads = JSON.parse(localStorage.getItem('test_leads') || '[]');
+      console.log('Local test leads:', leads);
+      debugOutput.textContent = JSON.stringify(leads, null, 2);
+    });
+
+    // Load an optional leads.json file from the same GitHub Pages site.
+    loadJsonButton.addEventListener('click', function() {
+      fetch('leads.json')
+        .then(function(response) {
+          if (!response.ok) {
+            throw new Error('Could not load leads.json');
+          }
+
+          return response.json();
+        })
+        .then(function(data) {
+          console.log('leads.json loaded:', data);
+          debugOutput.textContent = JSON.stringify(data, null, 2);
+        })
+        .catch(function(error) {
+          console.error(error);
+          debugOutput.textContent = 'Could not load leads.json. Make sure the file exists in the same folder as index.html.';
+        });
+    });
+
+    // Clear local test leads.
+    clearLeadsButton.addEventListener('click', function() {
+      localStorage.removeItem('test_leads');
+      console.log('Local test leads cleared.');
+      debugOutput.textContent = 'Local test leads cleared.';
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+[
+  {
+    "first_name": "Test",
+    "last_name": "Lead",
+    "phone": "555-555-5555",
+    "email": "test@example.com",
+    "zip": "83805",
+    "submitted_at": "2026-06-16T00:00:00.000Z",
+    "page_url": "https://example.github.io/test-lead-page/"
+  }
+]
